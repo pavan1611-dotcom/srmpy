@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern 3D Student Record Manager">
+    <title>Student Record Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background">
+        <span class="orb orb-1"></span>
+        <span class="orb orb-2"></span>
+        <span class="orb orb-3"></span>
+        <div class="grid-background"></div>
+    </div>
+
+    <nav class="navbar glass">
+        <div class="logo">
+            <div class="logo-icon">🎓</div>
+            <span>Student<span>Manager</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#add-student">Add Student</a>
+            <a href="#records">Records</a>
+        </div>
+        <button class="nav-button" onclick="openStudentModal()">+ Add Student</button>
+    </nav>
+
+    <main>
+        <section class="hero" id="dashboard">
+            <div class="hero-content">
+                <div class="badge"><span class="status-dot"></span>Student Management System</div>
+                <h1>Student Record <span>Manager</span></h1>
+                <p>Manage student records with a modern, secure and interactive academic dashboard.</p>
+                <div class="hero-buttons">
+                    <button class="primary-btn" onclick="openStudentModal()"><span>＋</span> Add New Student</button>
+                    <a href="#records" class="secondary-btn">View Records</a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="floating-card card-main">
+                    <div class="mini-icon">🎓</div>
+                    <h3>Academic Records</h3>
+                    <p>Organized & Secure</p>
+                    <div class="mini-chart">
+                        <span style="height:35%"></span><span style="height:60%"></span>
+                        <span style="height:45%"></span><span style="height:85%"></span>
+                        <span style="height:70%"></span><span style="height:95%"></span>
+                    </div>
+                </div>
+                <div class="floating-card card-small card-small-1"><span>📊</span><strong>Analytics</strong></div>
+                <div class="floating-card card-small card-small-2"><span>🔒</span><strong>Local Storage</strong></div>
+            </div>
+        </section>
+
+        <section class="statistics">
+            <div class="stat-card tilt-card"><div class="stat-icon blue">👨‍🎓</div><div><p>Total Students</p><h2 id="totalStudents">0</h2></div><span class="stat-decoration">01</span></div>
+            <div class="stat-card tilt-card"><div class="stat-icon purple">📚</div><div><p>Total Courses</p><h2 id="totalCourses">0</h2></div><span class="stat-decoration">02</span></div>
+            <div class="stat-card tilt-card"><div class="stat-icon green">✨</div><div><p>Added Today</p><h2 id="studentsToday">0</h2></div><span class="stat-decoration">03</span></div>
+            <div class="stat-card tilt-card"><div class="stat-icon orange">⚡</div><div><p>Storage Status</p><h2 class="storage-status">Active</h2></div><span class="stat-decoration">04</span></div>
+        </section>
+
+        <section class="section" id="add-student">
+            <div class="section-heading">
+                <div><span class="section-label">MANAGEMENT</span><h2>Add Student</h2><p>Create a new student record.</p></div>
+                <button class="outline-btn" onclick="openStudentModal()">+ New Record</button>
+            </div>
+
+            <div class="quick-form glass">
+                <form id="studentForm">
+                    <div class="form-grid">
+                        <div class="form-group"><label for="studentId">Student ID *</label><input type="text" id="studentId" placeholder="STU001" required><small class="error" id="studentIdError"></small></div>
+                        <div class="form-group"><label for="fullName">Full Name *</label><input type="text" id="fullName" placeholder="Enter full name" required><small class="error" id="fullNameError"></small></div>
+                        <div class="form-group"><label for="email">Email *</label><input type="email" id="email" placeholder="student@example.com" required><small class="error" id="emailError"></small></div>
+                        <div class="form-group"><label for="phone">Phone Number *</label><input type="tel" id="phone" placeholder="9876543210" required><small class="error" id="phoneError"></small></div>
+                        <div class="form-group"><label for="course">Course *</label><select id="course" required><option value="">Select Course</option><option>Computer Science</option><option>Information Technology</option><option>Artificial Intelligence</option><option>Data Science</option><option>Electronics</option><option>Mechanical</option><option>Civil</option><option>Business Administration</option></select><small class="error" id="courseError"></small></div>
+                        <div class="form-group"><label for="year">Year *</label><select id="year" required><option value="">Select Year</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select><small class="error" id="yearError"></small></div>
+                        <div class="form-group"><label for="gender">Gender *</label><select id="gender" required><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select><small class="error" id="genderError"></small></div>
+                        <div class="form-group"><label for="dob">Date of Birth *</label><input type="date" id="dob" required><small class="error" id="dobError"></small></div>
+                        <div class="form-group full-width"><label for="address">Address *</label><textarea id="address" rows="3" placeholder="Enter student's address" required></textarea><small class="error" id="addressError"></small></div>
+                    </div>
+                    <div class="form-actions"><button type="reset" class="reset-btn">Clear</button><button type="submit" class="primary-btn">Add Student</button></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="section recent-section">
+            <div class="section-heading"><div><span class="section-label">ACTIVITY</span><h2>Recently Added</h2><p>Your latest student records.</p></div></div>
+            <div id="recentStudents" class="recent-grid"></div>
+        </section>
+
+        <section class="section" id="records">
+            <div class="section-heading"><div><span class="section-label">DATABASE</span><h2>Student Records</h2><p>Search, filter, sort and manage records.</p></div></div>
+
+            <div class="controls glass">
+                <div class="search-box"><span>⌕</span><input type="search" id="searchInput" placeholder="Search by name or Student ID..."></div>
+                <select id="courseFilter"><option value="">All Courses</option><option>Computer Science</option><option>Information Technology</option><option>Artificial Intelligence</option><option>Data Science</option><option>Electronics</option><option>Mechanical</option><option>Civil</option><option>Business Administration</option></select>
+                <select id="yearFilter"><option value="">All Years</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+                <select id="sortFilter"><option value="newest">Newest First</option><option value="oldest">Oldest First</option><option value="nameAsc">Name A-Z</option><option value="nameDesc">Name Z-A</option><option value="idAsc">Student ID A-Z</option><option value="idDesc">Student ID Z-A</option></select>
+            </div>
+
+            <div class="table-container glass">
+                <div class="table-header"><div><h3>All Students</h3><span id="recordCount">0 records</span></div><button class="refresh-btn" onclick="renderStudents()">↻ Refresh</button></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Student</th><th>Email</th><th>Phone</th><th>Course</th><th>Year</th><th>Actions</th></tr></thead>
+                        <tbody id="studentTableBody"></tbody>
+                    </table>
+                </div>
+                <div id="emptyState" class="empty-state"><div class="empty-icon">🎓</div><h3>No Student Records</h3><p>Add your first student to get started.</p><button class="primary-btn" onclick="openStudentModal()">+ Add Student</button></div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="studentModal">
+        <div class="modal glass">
+            <button class="modal-close" onclick="closeStudentModal()">×</button>
+            <div class="modal-title"><span class="section-label">STUDENT RECORD</span><h2 id="modalTitle">Add Student</h2><p>Enter student information below.</p></div>
+            <form id="modalStudentForm">
+                <input type="hidden" id="editIndex">
+                <div class="modal-grid">
+                    <div class="form-group"><label for="modalStudentId">Student ID *</label><input type="text" id="modalStudentId" required><small class="error" id="modalStudentIdError"></small></div>
+                    <div class="form-group"><label for="modalFullName">Full Name *</label><input type="text" id="modalFullName" required><small class="error" id="modalFullNameError"></small></div>
+                    <div class="form-group"><label for="modalEmail">Email *</label><input type="email" id="modalEmail" required><small class="error" id="modalEmailError"></small></div>
+                    <div class="form-group"><label for="modalPhone">Phone *</label><input type="tel" id="modalPhone" required><small class="error" id="modalPhoneError"></small></div>
+                    <div class="form-group"><label for="modalCourse">Course *</label><select id="modalCourse" required><option value="">Select Course</option><option>Computer Science</option><option>Information Technology</option><option>Artificial Intelligence</option><option>Data Science</option><option>Electronics</option><option>Mechanical</option><option>Civil</option><option>Business Administration</option></select></div>
+                    <div class="form-group"><label for="modalYear">Year *</label><select id="modalYear" required><option value="">Select Year</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select></div>
+                    <div class="form-group"><label for="modalGender">Gender *</label><select id="modalGender" required><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+                    <div class="form-group"><label for="modalDob">Date of Birth *</label><input type="date" id="modalDob" required></div>
+                    <div class="form-group full-width"><label for="modalAddress">Address *</label><textarea id="modalAddress" rows="3" required></textarea></div>
+                </div>
+                <div class="modal-actions"><button type="button" class="reset-btn" onclick="closeStudentModal()">Cancel</button><button type="submit" class="primary-btn" id="modalSubmit">Save Student</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"><span id="toastIcon">✓</span><div><strong id="toastTitle">Success</strong><p id="toastMessage">Student added successfully.</p></div></div>
+
+    <footer>
+        <div class="footer-logo">🎓 Student<span>Manager</span></div>
+        <p>Modern Student Record Management System</p>
+        <p class="copyright">© <span id="currentYear"></span> Student Manager</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
